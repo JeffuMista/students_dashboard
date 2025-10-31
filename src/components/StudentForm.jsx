@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 export default function StudentForm() {
-  const { form, setForm } = useState({ name: "", age: "", email: "" });
-
+  const [form, setForm] = useState({ name: "", age: "", email: "" });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -11,8 +10,9 @@ export default function StudentForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.name && !form.age && !form.email) return;
+    if (!form.name || !form.age || !form.email) return;
 
+    // const onSubmit = form.onSubmit;
     form.onSubmit({ ...form, age: Number(form.age) });
     setForm({ name: "", age: "", email: "" });
   };
@@ -64,7 +64,7 @@ export default function StudentForm() {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="course"
+            name="email"
             value={form.email}
             type="text"
             placeholder="Enter email address"
@@ -73,7 +73,7 @@ export default function StudentForm() {
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
+            type="submit"
           >
             Submit
           </button>
