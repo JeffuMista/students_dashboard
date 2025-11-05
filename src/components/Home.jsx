@@ -16,8 +16,8 @@ export default function Home() {
     (async () => {
       setLoading(true);
       try {
-        const data = await fetchStudents();
-        setStudents(data);
+        const students = await fetchStudents();
+        setStudents(students);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,18 +38,21 @@ export default function Home() {
   }
   async function handleDeleteStudent(studentId) {
     await deleteStudent(studentId);
-    setStudents(students.filter((s) => s._id !== studentId));
+    setStudents(students.filter((student) => student._id !== studentId));
   }
   return (
     <>
       <StudentForm onSubmit={handleAddStudent} />
       {loading && <p>Loading students...</p>}
       {error && <p className="text-red-600">Error: {error}</p>}
-      <studentCard
-        students={students}
-        onEdit={handleEditStudent}
-        onDelete={handleDeleteStudent}
-      />
+      {students.map((s) => (
+        <StudentCard
+          key={s._id}
+          student={s}
+          onEdit={handleEditStudent}
+          onDelete={handleDeleteStudent}
+        />
+      ))}
     </>
   );
 }

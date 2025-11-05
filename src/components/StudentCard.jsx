@@ -1,20 +1,27 @@
 import { useState } from "react";
-export default function StudentCard(student, onEdit, onDelete) {
+
+export default function StudentCard({ student, onEdit, onDelete }) {
   const [edit, setEdit] = useState(false);
-  const [draft, setDraft] = useState({ student });
+  const [draft, setDraft] = useState(student);
+
+  const handleSave = () => {
+    onEdit(draft);
+    setEdit(false);
+  };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 border border-gray-300">
+    <div className="rounded-xl shadow-sm border border-gray-300 bg-white m-2 p-2">
       {!edit ? (
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">
-            <h3>{student.name}</h3>
-            <p className="text-gray-800 text-base flex flex-col gap-2">
+        <div className="flex justify-between">
+          <div>
+            <h3 className="text-lg font-semibold">{student.name}</h3>
+            <p className="text-slate-600 text-sm">{student.email}</p>
+            <p className="text-slate-600 text-sm">
               Age: {student.age}
-              <span> {student.email} </span> <span>Batch: JULY 2025 </span>
             </p>
+            <p className="text-slate-600 text-sm">Batch: JULY 2025</p>
           </div>
-          <div className="flex gap-2 ml-2">
+          <div className="flex gap-2">
             <button
               onClick={() => setEdit(true)}
               className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded m-4"
@@ -65,8 +72,9 @@ export default function StudentCard(student, onEdit, onDelete) {
           </div>
           <div className="flex items-center justify-between">
             <button
+              onClick={handleSave}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
+              type="button"
             >
               Save
             </button>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function StudentForm() {
+export default function StudentForm({ onSubmit }) {
   const [form, setForm] = useState({ name: "", age: "", email: "" });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -9,73 +9,54 @@ export default function StudentForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!form.name || !form.age || !form.email) return;
-
-    // const onSubmit = form.onSubmit;
-    form.onSubmit({ ...form, age: Number(form.age) });
+    onSubmit({ ...form, age: Number(form.age) });
     setForm({ name: "", age: "", email: "" });
   };
+
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Add New Student</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            Name
-          </label>
-          <input
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="name"
-            value={form.name}
-            type="text"
-            placeholder="Enter name"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="age"
-          >
-            Age
-          </label>
-          <input
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="age"
-            value={form.age}
-            type="number"
-            placeholder="Enter age (18 - 40)"
-            min="18"
-            max="40"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            onChange={handleChange}
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="Email"
-          >
-            Email
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="email"
-            value={form.email}
-            type="text"
-            placeholder="Enter email address"
-          />
-        </div>
-        <div className="flex items-center justify-between">
+    <div className="w-full flex justify-center items-center my-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-5xl bg-white border rounded-xl p-4 flex flex-row flex-wrap items-center justify-center gap-4"
+      >
+        <input
+          onChange={handleChange}
+          className="border rounded-lg px-3 py-2 flex-1 min-w-[180px]"
+          name="name"
+          value={form.name}
+          type="text"
+          placeholder="Enter name"
+          autoComplete="name"
+        />
+
+        <input
+          onChange={handleChange}
+          className="border rounded-lg px-3 py-2 w-28 min-w-[100px]"
+          name="age"
+          value={form.age}
+          type="number"
+          placeholder="Age"
+          min="18"
+          max="40"
+        />
+
+        <input
+          onChange={handleChange}
+          className="border rounded-lg px-3 py-2 flex-1 min-w-[220px]"
+          name="email"
+          value={form.email}
+          type="text"
+          placeholder="Enter email address"
+          autoComplete="email"
+        />
+
+        <div className="flex items-center justify-center">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Submit
+            Add Student
           </button>
         </div>
       </form>
